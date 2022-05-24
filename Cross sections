@@ -1,0 +1,36 @@
+import matplotlib.pyplot as plt
+import numpy as np
+from scipy.optimize import curve_fit
+import csv
+from math import *
+
+file=open('/home/luba6525/Cross-section data/Ce.csv')
+type(file)
+csvreader=csv.reader(file)
+rows=[]
+for row in csvreader:
+rows.append(row)
+#print(rows)
+file.close()
+
+Truerows=np.array(rows)
+Rowsfloat=Truerows.astype(np.float)
+
+#psi=1
+a=4e-14
+#chi=5.538
+ def sigma(E,psi,chi):
+      return psi*a*(1/chi**2)*np.divide(np.log(E/chi),(E/chi))*10**16
+
+energies=np.logspace(0.72,3,100)
+sigmas=sigma(Energies,1,5.538)
+
+popt, pcov= curve_fit(sigma, Rowsfloat[8;0], Rowsfloat[8:,1],)
+sigmafit=sigma(Energies, popt[0],popt[1])
+plt.plot(Energies, sigmas)
+plt.plot(Rowsfloat[:,0], Rowsfloat[:,1])
+plt.plot(Energies,sigmafit)
+plt.xscale('log')
+plt.xlim([20,1000])
+plt.ylim([0,10])
+plt.show()
